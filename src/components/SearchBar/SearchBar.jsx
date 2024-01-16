@@ -4,7 +4,7 @@
 function SearchBar() {
         return (
             <div>
-                <input type="text" placeholder="Enter A Song, Album, or Artist" />
+                <input type="text" placeholder="Enter A Song Title" />
                 <button>Search</button>
             </div>
         )
