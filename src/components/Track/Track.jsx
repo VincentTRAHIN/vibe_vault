@@ -8,7 +8,9 @@ function Track(props) {
                     <h3>{props.name}  </h3>
                     <p> {props.artist} | {props.album} </p>
                 </div>
-                <button > + or - will go here </button>
+                <button className="bg-purple-800 hover:bg-purple-900 text-white font-bold py-2 px-4 rounded w-full">
+            + or -
+          </button>
             </div>
         )
     

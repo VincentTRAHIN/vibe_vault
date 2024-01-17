@@ -40,15 +40,21 @@ function App() {
   ]);
 
   return (
-    <div >
-      <header>
-        <h1>VibeVault</h1>
+    <div className="min-h-screen bg-purple-600 text-white">
+      <header className="text-center py-6">
+        <h1 className="text-4xl font-bold">VibeVault</h1>
       </header>
-      <main>
-        <SearchBar />
-        <div >
-          <SearchResults searchResults={searchResults} />
-          <Playlist />
+      <main className="px-4">
+        <div className="max-w-md mx-auto">
+          <SearchBar />
+        </div>
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 justify-items-center  ">
+          <div className="col-span-1">
+            <SearchResults searchResults={searchResults} />
+          </div>
+          <div className="col-span-1">
+            <Playlist />
+          </div>
         </div>
       </main>
     </div>

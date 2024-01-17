@@ -4,20 +4,18 @@ import React from "react";
 import Track from "../Track/Track.jsx";
 
 function Tracklist(props) {
-        return (
-            <div >
-                {props.tracks.map(track => {
-                    <Track
-                        key={track.id}
-                        name= {track.name}
-                        artist= {track.artist}
-                        album= {track.album}
-                     />
-                })}                
-            </div>
-        )
-    
+    return (
+        <div className="space-y-3">
+          {props.tracks.map(track => (
+            <Track
+              key={track.id}
+              name={track.name}
+              artist={track.artist}
+              album={track.album}
+            />
+          ))}
+        </div>
+      );
 }
 
-
-export default Tracklist; 
+export default Tracklist;
