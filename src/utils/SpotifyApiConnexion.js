@@ -8,6 +8,7 @@ const spotifyAuthorizedEndpoint = `https://accounts.spotify.com/authorize?client
 let accessToken;
 
 const SpotifyApiConnexion = {
+  // get the access token from the url
   getAccessToken() {
     if (accessToken) {
       return accessToken;
@@ -28,6 +29,33 @@ const SpotifyApiConnexion = {
     } else {
       window.location = spotifyAuthorizedEndpoint;
     }
+  },
+
+  // Implement Spotify search request
+  search(term) {
+    const accessToken = SpotifyApiConnexion.getAccessToken();
+    return fetch(
+      `https://api.spotify.com/v1/search?type=track&q=${term}&limit=10`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((jsonResponse) => {
+        if (!jsonResponse.tracks) {
+          return [];
+        }
+        console.log(jsonResponse.tracks.items);
+        return jsonResponse.tracks.items.map((track) => ({
+          id: track.id,
+          name: track.name,
+          artist: track.artists[0].name,
+          album: track.album.name,
+          uri: track.uri,
+        }));
+      });
   },
 };
 
