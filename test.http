@@ -1,0 +1,4 @@
+POST https://accounts.spotify.com/api/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&client_id=3be8241b63e2457fb3618261c5649e8e&client_secret=9cc9bce94e9f4c88bf91809cd561911c
