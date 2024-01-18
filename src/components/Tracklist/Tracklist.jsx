@@ -9,9 +9,13 @@ function Tracklist(props) {
           {props.tracks.map(track => (
             <Track
               key={track.id}
+              track={track}
               name={track.name}
               artist={track.artist}
               album={track.album}
+              onAdd={() => props.onAdd(track)}
+              onRemove={() => props.onRemove(track)}
+              isRemoval={props.isRemoval}
             />
           ))}
         </div>

@@ -39,6 +39,34 @@ function App() {
   }
   ]);
 
+  // Add state for the <playlistN></playlistN>ame
+  const [playlistName, setPlaylistName] = useState('My 1st Playlist');
+
+  // Add state for the playlistTracks
+const [playlistTracks, setPlaylistTracks] = useState([
+]);
+
+// Create a method that add a track from the playlist
+const addTrack = (track) => {
+  // Check if the track is already in the playlist
+  if (playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
+      return; // If it is, stop here
+  }
+// Add new track to the playlist
+  setPlaylistTracks([...playlistTracks, track]);
+}; 
+
+// Create a method that removes a track from the playlist
+const removeTrack = (track) => {
+  // Filter the track out of the playlist
+  const newPlaylist = playlistTracks.filter(currentTrack => currentTrack.id !== track.id);
+  // Set the new playlist
+  setPlaylistTracks(newPlaylist);
+};
+
+
+
+
   return (
     <div className="min-h-screen bg-purple-600 text-white">
       <header className="text-center py-6">
@@ -50,10 +78,10 @@ function App() {
         </div>
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 justify-items-center  ">
           <div className="col-span-1">
-            <SearchResults searchResults={searchResults} />
+            <SearchResults searchResults={searchResults} onAdd={addTrack} />
           </div>
           <div className="col-span-1">
-            <Playlist />
+            <Playlist playlistName= {playlistName} tracks={playlistTracks} onNameChange={setPlaylistName} onRemove={removeTrack}  />
           </div>
         </div>
       </main>

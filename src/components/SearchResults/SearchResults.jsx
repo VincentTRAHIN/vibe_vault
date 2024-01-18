@@ -7,7 +7,7 @@ function SearchResults(props) {
         <div className="w-full md:w-1/2">
           <h2 className="text-2xl mb-4">Results</h2>
           <div>
-            <Tracklist tracks={props.searchResults} />
+            <Tracklist tracks={props.searchResults} onAdd={props.onAdd} />
           </div>
         </div>
       );
