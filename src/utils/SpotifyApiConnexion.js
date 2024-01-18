@@ -57,6 +57,48 @@ const SpotifyApiConnexion = {
         }));
       });
   },
+
+  // Implement save a user's playlist to their Spotify account
+  savePlaylist(playlistName, trackUris) {
+    if (!playlistName || !trackUris.length) {
+      return;
+    }
+    const accessToken = SpotifyApiConnexion.getAccessToken();
+    const headers = {
+      Authorization: `Bearer ${accessToken}`,
+    };
+    let userId;
+
+    // Get the user's Spotify username
+    return fetch("https://api.spotify.com/v1/me", {
+      headers: headers,
+    })
+      .then((response) => response.json())
+      .then((jsonResponse) => {
+        userId = jsonResponse.id;
+
+        // Create a new playlist in the user's account and get the playlist ID
+        return fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
+          headers: headers,
+          method: "POST",
+          body: JSON.stringify({ name: playlistName }),
+        })
+          .then((response) => response.json())
+          .then((jsonResponse) => {
+            const playlistId = jsonResponse.id;
+
+            // Add the tracks to the playlist
+            return fetch(
+              `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks`,
+              {
+                headers: headers,
+                method: "POST",
+                body: JSON.stringify({ uris: trackUris }),
+              }
+            );
+          });
+      });
+  },
 };
 
 export default SpotifyApiConnexion;
