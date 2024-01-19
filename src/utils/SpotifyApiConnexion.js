@@ -1,5 +1,5 @@
 const clientId = "3be8241b63e2457fb3618261c5649e8e";
-const redirectUri = "http://localhost:3000/";
+const redirectUri = "http://localhost:5173/";
 const scopes = "playlist-modify-public playlist-modify-private"; // Adjust scopes as needed
 const spotifyAuthorizedEndpoint = `https://accounts.spotify.com/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(
   redirectUri
