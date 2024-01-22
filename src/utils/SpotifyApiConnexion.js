@@ -27,7 +27,7 @@ const SpotifyApiConnexion = {
       window.history.pushState("Access Token", null, "/");
       return accessToken;
     } else {
-      window.location = spotifyAuthorizedEndpoint;
+      window.location.assign(spotifyAuthorizedEndpoint);
     }
   },
 
