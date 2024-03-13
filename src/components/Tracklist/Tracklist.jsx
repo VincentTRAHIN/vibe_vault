@@ -4,9 +4,11 @@ import React from "react";
 import Track from "../Track/Track.jsx";
 
 function Tracklist(props) {
+  const tracks = props.tracks || [];
+
     return (
         <div className="space-y-3">
-          {props.tracks.map(track => (
+          {tracks.map(track => (
             <Track
               key={track.id}
               track={track}
