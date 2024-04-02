@@ -2,12 +2,14 @@
 
 import React from 'react';
 
-const PlaylistListItem = ({ id, name, onSelectPlaylist }) => { // Add onSelectPlaylist here
+function PlaylistListItem(props) {
+    const { id, name, onSelectPlaylist } = props;
     return (
-      <div onClick={() => onSelectPlaylist(id)}>
-        <h3>{name}</h3>
-      </div>
+        <div onClick={() => onSelectPlaylist(id)}>
+            <h3>{name}</h3>
+        </div>
     );
-  };
+}
+
 
 export default PlaylistListItem;

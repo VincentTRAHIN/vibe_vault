@@ -29,18 +29,14 @@ function App() {
     });
   }
 
-  // Method that selectPlayList 
+  // Méthode to select a playlist
   const selectPlaylist = (id) => {
-    Spotify.getPlaylist(id).then(playlist => {
-      setPlaylistName(playlist.name);
-      setPlaylistTracks(playlist.tracks);
-      setPlaylistId(id); // Update the playlistId state
+    Spotify.getPlaylist(id).then(playlistData => {
+      setPlaylistName(playlistData.name); 
+      setPlaylistTracks(playlistData.tracks);
     });
   };
   
-  
-
-
 
 
   // Method that add a track from the playlist

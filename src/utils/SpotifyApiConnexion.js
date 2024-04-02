@@ -1,6 +1,7 @@
 const clientId = "3be8241b63e2457fb3618261c5649e8e";
 const redirectUri = "http://localhost:5173/";
-const scopes = "playlist-modify-public playlist-modify-private"; // Adjust scopes as needed
+const scopes =
+  "playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative"; // Adjust scopes as needed
 const spotifyAuthorizedEndpoint = `https://accounts.spotify.com/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(
   redirectUri
 )}&scope=${encodeURIComponent(scopes)}&response_type=token`;
@@ -80,11 +81,13 @@ const SpotifyApiConnexion = {
   },
   //Get the current user's ID
   getCurrentUserId() {
+    const accessToken = SpotifyApiConnexion.getAccessToken();
+    const headers = { Authorization: `Bearer ${accessToken}` };
+
     if (userId) {
       return Promise.resolve(userId);
     }
 
-    const headers = { Authorization: `Bearer ${accessToken}` };
     return fetch("https://api.spotify.com/v1/me", { headers: headers })
       .then((response) => response.json())
       .then((jsonResponse) => {
@@ -119,28 +122,38 @@ const SpotifyApiConnexion = {
   // Implement get a playlist's tracks
   getPlaylist(playlistId) {
     const accessToken = this.getAccessToken();
+    // Créer un en-tête pour les requêtes
     const headers = { Authorization: `Bearer ${accessToken}` };
-    return this.getCurrentUserId().then((userId) => {
-      return fetch(
-        `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks`,
-        {
-          headers: headers,
-        }
-      )
-        .then((response) => response.json())
-        .then((jsonResponse) => {
-          if (!jsonResponse.items) {
-            return [];
-          }
-          return jsonResponse.items.map((item) => ({
-            id: item.track.id,
-            name: item.track.name,
-            artist: item.track.artists[0].name,
-            album: item.track.album.name,
-            uri: item.track.uri,
-          }));
-        });
-    });
+
+    // Premièrement, récupérer les détails de la playlist pour obtenir le nom
+    return fetch(`https://api.spotify.com/v1/playlists/${playlistId}`, {
+      headers: headers,
+    })
+      .then((response) => response.json())
+      .then((playlistDetails) => {
+        // Ensuite, récupérer les pistes de la playlist
+        return fetch(
+          `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+          { headers: headers }
+        )
+          .then((response) => response.json())
+          .then((jsonResponse) => {
+            const tracks = jsonResponse.items.map((item) => ({
+              id: item.track.id,
+              name: item.track.name,
+              artist: item.track.artists
+                .map((artist) => artist.name)
+                .join(", "),
+              album: item.track.album.name,
+              uri: item.track.uri,
+            }));
+            // Retourner à la fois le nom et les pistes de la playlist
+            return {
+              name: playlistDetails.name,
+              tracks: tracks,
+            };
+          });
+      });
   },
 
   // Implement save a user's playlist to their Spotify account
