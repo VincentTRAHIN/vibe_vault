@@ -57,7 +57,7 @@ const SpotifyApiConnexion = {
   search(term) {
     const accessToken = SpotifyApiConnexion.getAccessToken();
     return fetch(
-      `https://api.spotify.com/v1/search?type=track&q=${term}&limit=10`,
+      `https://api.spotify.com/v1/search?type=track&q=${term}&limit=50`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,

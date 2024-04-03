@@ -74,18 +74,13 @@ const savePlaylist = () => {
 
   return (
     <div className="min-h-screen bg-purple-600 text-white">
-      <header className="text-center py-6 ">
-        <h1 className="text-4xl font-bold ">VibeVault</h1>
-      </header>
-      <main className="px-4">
-        <div className="max-w-md mx-auto h-full">
+        <h1 className="py-3 bg-[#010c3f] text-center text-[1.88rem] text-white font-poppins
+">VibeVault</h1>
+      <div className="h-full py-0 px-[17%] pb-[10%] bg-cover bg-center bg-no-repeat text-white font-[Work Sans] font-medium
+">
           <SearchBar onSearch = {search} />
-        </div>
-        <div className="flex justify-between lg: items-center flex-col   ">
-          <div className="col-span-1 bg-black bg-opacity-25 p-3 my-2 rounded shadow-black">
+        <div className="flex justify-between w-full md:flex-col md:items-center ">
             <SearchResults searchResults={searchResults} onAdd={addTrack} />
-          </div>
-          <div className="col-span-1 bg-black bg-opacity-25 p-3 my-2 rounded shadow-black">
             <Playlist
               playlistName={playlistName}
               tracks={playlistTracks}
@@ -93,12 +88,9 @@ const savePlaylist = () => {
               onRemove={removeTrack}
               onSave={savePlaylist}
             />
-          </div>
-          <div className="col-span-1 bg-black bg-opacity-25 p-3 my-2 rounded shadow-black">
             <PlaylistList selectPlaylist={selectPlaylist} />
         </div>
-        </div>
-      </main>
+      </div>
     </div>
   );
 }

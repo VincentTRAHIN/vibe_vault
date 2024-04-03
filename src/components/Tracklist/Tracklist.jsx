@@ -7,7 +7,7 @@ function Tracklist(props) {
   const tracks = props.tracks || [];
 
     return (
-        <div className="space-y-3 w-full">
+        <div className="w-full">
           {tracks.map(track => (
             <Track
               key={track.id}
