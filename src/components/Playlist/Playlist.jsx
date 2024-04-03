@@ -8,15 +8,15 @@ function Playlist(props) {
     };
 
     return (
-        <div className="w-full md:w-1/2">
+        <div className="flex flex-col items-center w-full max-h-950px py-9 px-7">
             <input
                 type="text"
                 value={props.playlistName || ''}
                 onChange={handleNameChange}
-                className="text-gray-700 mb-4 p-2 w-full"
+                className="text-gray-700 mb-4 p-2 w-full border outline   "
             />
             <Tracklist tracks={props.tracks} onRemove={props.onRemove} isRemoval={true} />
-            <button className="bg-purple-800 hover:bg-purple-900 text-white font-bold py-2 px-4 rounded w-full" onClick={props.onSave}>
+            <button className="bg-purple-800 hover:bg-purple-900 text-white font-bold py-2 px-4 w-full cursor-pointer w-40 rounded-3xl border-0 text-center " onClick={props.onSave}>
                 SAVE TO SPOTIFY
             </button>
         </div>

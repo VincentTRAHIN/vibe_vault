@@ -34,6 +34,7 @@ function App() {
     Spotify.getPlaylist(id).then(playlistData => {
       setPlaylistName(playlistData.name); 
       setPlaylistTracks(playlistData.tracks);
+      setPlaylistId(id);
     });
   };
   
@@ -73,14 +74,14 @@ const savePlaylist = () => {
 
   return (
     <div className="min-h-screen bg-purple-600 text-white">
-      <header className="text-center py-6">
-        <h1 className="text-4xl font-bold">VibeVault</h1>
+      <header className="text-center py-6 ">
+        <h1 className="text-4xl font-bold ">VibeVault</h1>
       </header>
       <main className="px-4">
-        <div className="max-w-md mx-auto">
+        <div className="max-w-md mx-auto h-full">
           <SearchBar onSearch = {search} />
         </div>
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 justify-items-center ">
+        <div className="flex justify-between lg: items-center flex-col   ">
           <div className="col-span-1 bg-black bg-opacity-25 p-3 my-2 rounded shadow-black">
             <SearchResults searchResults={searchResults} onAdd={addTrack} />
           </div>

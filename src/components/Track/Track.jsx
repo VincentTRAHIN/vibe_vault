@@ -11,10 +11,13 @@ function Track(props) {
   };
 
   return (
-    <div>
-      <div>
-        <h3>{props.name} </h3>
-        <p>
+    <div className="flex items-center border-b border-white border-opacity-80
+    ">
+      <div className="flex-grow flex flex-col justify-center h-18
+">
+        <h3 className="mb-1">{props.name} </h3>
+        <p className="text-sm font-light text-white text-opacity-80
+">
           {" "}
           {props.artist} | {props.album}{" "}
         </p>
@@ -22,11 +25,12 @@ function Track(props) {
 
       {
         props.isRemoval ?
-        (<button className="bg-purple-800 hover:bg-purple-900 text-white font-bold py-2 px-4 rounded w-full" onClick={removeTrack}>
+        (<button className="cursor-pointer w-1/5 p-2 text-lg transition-colors duration-200 border-0 bg-transparent text-black hover:text-white
+        " onClick={removeTrack}>
             -
         </button> ) : (      
         <button
-        className="bg-purple-800 hover:bg-purple-900 text-white font-bold py-2 px-4 rounded w-full"
+        className="cursor-pointer w-1/5 p-2 text-lg transition-colors duration-200 border-0 bg-transparent text-black hover:text-white"
         onClick={addTrack}
       >
         +

@@ -158,39 +158,73 @@ const SpotifyApiConnexion = {
 
   // Implement save a user's playlist to their Spotify account
   savePlaylist(playlistName, trackUris, playlistId) {
+    console.log("Starting savePlaylist", {
+      playlistName,
+      trackUris,
+      playlistId,
+    });
     if (!playlistName || !trackUris.length) {
-      return;
+      console.log("No playlist name or tracks provided");
+      return Promise.resolve();
     }
-    return this.getCurrentUserId().then((userId) => {
-      const headers = { Authorization: `Bearer ${this.getAccessToken()}` };
 
-      // Check if we're updating an existing playlist
+    return this.getCurrentUserId().then((userId) => {
+      console.log("Got current user ID:", userId);
+      const headers = { Authorization: `Bearer ${this.getAccessToken()}` };
+      let url = `https://api.spotify.com/v1/users/${userId}/playlists`;
+      let method = "POST";
+      let body = JSON.stringify({ name: playlistName });
+
       if (playlistId) {
-        return fetch(`https://api.spotify.com/v1/playlists/${playlistId}`, {
-          headers: headers,
-          method: "PUT",
-          body: JSON.stringify({ name: playlistName }),
-        });
+        console.log("Updating existing playlist");
+        url += `/${playlistId}`;
+        method = "PUT";
       } else {
-        // Creating a new playlist
-        return fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
-          headers: headers,
-          method: "POST",
-          body: JSON.stringify({ name: playlistName }),
+        console.log("Creating new playlist");
+      }
+
+      return fetch(url, { headers, method, body })
+        .then((response) => {
+          if (!response.ok) {
+            console.error("Response not OK", response.statusText);
+            throw new Error("Request failed with status " + response.status);
+          }
+          return response.text(); // Use text() here to avoid JSON parsing error for empty response
         })
-          .then((response) => response.json())
-          .then((jsonResponse) => {
+        .then((text) => {
+          const jsonResponse = text ? JSON.parse(text) : {};
+          console.log("Response from playlist operation:", jsonResponse);
+
+          // if a new playlist was created, add tracks to it
+          if (!playlistId && jsonResponse.id) {
             const newPlaylistId = jsonResponse.id;
+            console.log("Adding tracks to new playlist", newPlaylistId);
             return fetch(
               `https://api.spotify.com/v1/playlists/${newPlaylistId}/tracks`,
               {
-                headers: headers,
+                headers,
                 method: "POST",
                 body: JSON.stringify({ uris: trackUris }),
               }
-            );
-          });
-      }
+            )
+              .then((response) => {
+                if (!response.ok) {
+                  console.error(
+                    "Adding tracks response not OK",
+                    response.statusText
+                  );
+                  throw new Error(
+                    "Adding tracks failed with status " + response.status
+                  );
+                }
+                return response.json();
+              })
+              .then((jsonResponse) =>
+                console.log("Tracks added response:", jsonResponse)
+              );
+          }
+        })
+        .catch((error) => console.error("Error in savePlaylist:", error));
     });
   },
 };
