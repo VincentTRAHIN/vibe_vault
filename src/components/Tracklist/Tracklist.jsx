@@ -18,8 +18,10 @@ function Tracklist(props) {
               onAdd={() => props.onAdd(track)}
               onRemove={() => props.onRemove(track)}
               isRemoval={props.isRemoval}
+              preview_url={track.preview_url}
             />
           ))}
+          
         </div>
       );
 }

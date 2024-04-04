@@ -69,13 +69,13 @@ const SpotifyApiConnexion = {
         if (!jsonResponse.tracks) {
           return [];
         }
-        console.log(jsonResponse.tracks.items);
         return jsonResponse.tracks.items.map((track) => ({
           id: track.id,
           name: track.name,
           artist: track.artists[0].name,
           album: track.album.name,
           uri: track.uri,
+          preview_url: track.preview_url,
         }));
       });
   },
@@ -146,6 +146,7 @@ const SpotifyApiConnexion = {
                 .join(", "),
               album: item.track.album.name,
               uri: item.track.uri,
+              preview_url: item.track.preview_url,
             }));
             // Retourner à la fois le nom et les pistes de la playlist
             return {

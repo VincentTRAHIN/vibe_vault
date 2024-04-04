@@ -1,5 +1,6 @@
 // Create A component that Represents an individual track or song.
 // src/components/Tracklist.jsx
+import AudioPlayer from '../AudioPlayer/AudioPlayer.jsx';
 
 function Track(props) {
   const addTrack = () => {
@@ -9,6 +10,8 @@ function Track(props) {
   const removeTrack = () => {
     props.onRemove(props.track);
   };
+
+  
 
   return (
     <div className="flex items-center border-b border-white border-opacity-80">
@@ -20,6 +23,7 @@ function Track(props) {
           {props.artist} | {props.album}{" "}
         </p>
       </div>
+      <AudioPlayer controls previewUrl={props.preview_url} />
 
       {
         props.isRemoval ?

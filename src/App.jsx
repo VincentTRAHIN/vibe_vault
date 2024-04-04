@@ -72,6 +72,8 @@ const savePlaylist = () => {
 };
 
 
+
+
   return (
     <div className="min-h-screen bg-purple-600 text-white">
         <h1 className="py-3 bg-[#010c3f] text-center text-[1.88rem] text-white font-poppins
